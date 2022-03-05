@@ -30,6 +30,6 @@ Imaginemos en una variable **balance** igual a 500 y que tenemos una función qu
 
 Go/Golang provee herramientas para superar ls condición de carrera. 
 - sync.Mutex.Lock() nos ayudará a bloquear el acceso a valores compartidos en diferentes GoRoutines.
-- sync.Mutex.Unlock() desbloqueará nuevamente el valor al que necesitamos acceder. 
+- sync.Mutex.Unlock() desbloqueará nuevamente el valor al que necesitamos acceder.
+- sync.RWMutex nos permite bloquear para escritura (Lock() y UnLock()) y para lectura (RLock() y RUnlock()).
 
-Pero esto no funcionará cuando solo existan lecturas.

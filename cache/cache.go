@@ -22,7 +22,7 @@ func (s *Service) Work(job int) {
 	s.Lock.RLock()
 	exists := s.InProgress[job]
 	if exists {
-		s.Lock.Unlock()
+		s.Lock.RUnlock()
 		response := make(chan int)
 		defer close(response)
 

@@ -35,7 +35,7 @@ type Laptop struct {
 	Computer
 }
 
-//el patron Factory, nos permite que nos desentengamos de los subtipos
+//el patron Factory, es un patron de diseño de creación nos permite que nos desentengamos de los subtipos
 //este Laptop que esta basado en Computer, cualquier struck que este basado en Computer podrá ser tratado como un IProduct
 func newLaptop() IProduct {
 	return &Laptop{

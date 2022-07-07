@@ -17,6 +17,7 @@ func (Database) CreateSingleConnection() {
 var db *Database
 var lock sync.Mutex
 
+//singleton es un tipo de patron de diseño de creación
 func getDatabaseInstance() *Database {
 	lock.Lock() //sin el bloqueo se crea cada conexión cada vez
 	defer lock.Unlock()

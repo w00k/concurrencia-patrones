@@ -22,6 +22,7 @@ func (BankPayment) Pay(bankAccount int) {
 	fmt.Printf("Paying using Bank Account %d\n", bankAccount)
 }
 
+//adapter es un patron de diseño estructural, que permite colaborar entre objetos
 //adaptador que implementa la estructura de BankPayment
 type BankPaymentAdapter struct {
 	BankPayment *BankPayment

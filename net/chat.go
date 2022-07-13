@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"log"
 	"net"
 )
 
@@ -46,5 +47,39 @@ func HandleConnection(conn net.Conn) {
 func MessageWrite(conn net.Conn, messages <-chan string) {
 	for message := range messages {
 		fmt.Fprint(conn, message)
+	}
+}
+
+func Broadcast() {
+	clients := make(map[Client]bool) //mapa para saber que clientes estan conectados
+	for {
+		select { //evaluar casos
+		case message := <-messages: //notificar mensajes
+			for client := range clients {
+				client <- message
+			}
+		case newClient := <-incommingClients: //agrego clientes
+			clients[newClient] = true
+		case leavingClient := <-leavingClients: //quito cliente que se desconectan
+			delete(clients, leavingClient)
+			close(leavingClient)
+		}
+	}
+}
+
+//servidor
+func main() {
+	listener, err := net.Listen("tcp", fmt.Sprintf("%s:%d", *host, *port))
+	if err != nil {
+		log.Fatal(err)
+	}
+	go Broadcast()
+	for {
+		conn, err := listener.Accept() //cada cliente nuevo va a crear una conexión nueva
+		if err != nil {
+			log.Print(err)
+			continue
+		}
+		go HandleConnection(conn)
 	}
 }
